@@ -160,12 +160,14 @@ npm run dev
 
 ```json
 {
-  "amount": 1000,
+  "amount": 15000,
+  "description": "Room rent",
+  "paid_by": "Shantanu",
   "split_type": "exact",
   "splits": [
-    { "person": "Shantanu", "amount": 500 },
-    { "person": "Sanket", "amount": 300 },
-    { "person": "Om", "amount": 200 }
+    { "person": "Shantanu", "amount": 6000 },
+    { "person": "Sanket", "amount": 6000 },
+    { "person": "Om", "amount": 3000 }
   ]
 }
 ```
