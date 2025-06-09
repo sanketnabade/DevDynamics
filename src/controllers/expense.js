@@ -38,6 +38,7 @@ exports.createExpense = catchAsync(async (req, res) => {
 // Update expense
 exports.updateExpense = catchAsync(async (req, res) => {
   const errors = validationResult(req);
+  console.log("Id: ", req.params);
   if (!errors.isEmpty()) {
     return res.status(400).json({
       success: false,

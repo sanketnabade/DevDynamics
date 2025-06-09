@@ -14,11 +14,13 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
+console.log("I am in server.js at line 17");
 app.use("/api", require("./routes/expense"));
 
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
+
   res.status(500).json({
     success: false,
     message: err.message || "Something went wrong!",
