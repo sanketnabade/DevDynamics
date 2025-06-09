@@ -7,7 +7,7 @@ const catchAsync = (fn) => {
 const calculateBalances = (expenses) => {
   const balances = {};
 
-  // Initialize balances
+  // Initialize balances for all people
   expenses.forEach((expense) => {
     if (!balances[expense.paid_by]) balances[expense.paid_by] = 0;
     expense.splits.forEach((split) => {
@@ -17,13 +17,23 @@ const calculateBalances = (expenses) => {
 
   // Calculate net balance for each person
   expenses.forEach((expense) => {
-    // Add the amount paid
-    balances[expense.paid_by] += expense.amount;
+    // Add the full amount to the person who paid
+    balances[expense.paid_by] =
+      Number(balances[expense.paid_by]) + Number(expense.amount);
 
-    // Subtract the shares
-    expense.splits.forEach((split) => {
-      balances[split.person] -= split.amount;
-    });
+    if (expense.split_type === "equal") {
+      // For equal splits, divide amount equally
+      const splitAmount = Number(expense.amount) / expense.splits.length;
+      expense.splits.forEach((split) => {
+        balances[split.person] = Number(balances[split.person]) - splitAmount;
+      });
+    } else {
+      // For exact or percentage splits, use the calculated amounts
+      expense.splits.forEach((split) => {
+        balances[split.person] =
+          Number(balances[split.person]) - Number(split.amount || 0);
+      });
+    }
   });
 
   return Object.entries(balances).map(([person, amount]) => ({

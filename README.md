@@ -224,7 +224,7 @@ The seed script includes test data with:
 
 ## Deployment
 
-The application is prepared for deployment on platforms like Railway.app or Render.com. Environment variables should be configured in the deployment platform.
+Link:
 
 ## Contributing
 

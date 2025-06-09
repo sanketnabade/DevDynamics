@@ -5,7 +5,8 @@ const expenseController = require("../controllers/expense");
 
 router.get("/expenses", expenseController.getAllExpenses);
 router.post("/expenses", validateExpense, expenseController.createExpense);
-router.put("/expenses/:id", validateExpense, expenseController.updateExpense);
+router.put("/expenses", validateExpense, expenseController.updateExpense); // Handle ID in query
+router.put("/expenses/:id", validateExpense, expenseController.updateExpense); // Handle ID in params
 router.delete("/expenses/:id", expenseController.deleteExpense);
 
 router.get("/people", expenseController.getAllPeople);

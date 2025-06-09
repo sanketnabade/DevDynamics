@@ -39,7 +39,12 @@ exports.updateExpense = catchAsync(async (req, res, next) => {
     return next(new AppError("Validation failed", 400, errors.array()));
   }
 
-  const expense = await Expense.findByIdAndUpdate(req.params.id, req.body, {
+  const expenseId = req.params.id || req.query.id;
+  if (!expenseId) {
+    return next(new AppError("Expense ID is required", 400));
+  }
+
+  const expense = await Expense.findByIdAndUpdate(expenseId, req.body, {
     new: true,
     runValidators: true,
   });
