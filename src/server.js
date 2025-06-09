@@ -14,18 +14,19 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-console.log("I am in server.js at line 17");
 app.use("/api", require("./routes/expense"));
 
-// Error handling middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-
-  res.status(500).json({
+// 404 handler
+app.use((req, res, next) => {
+  res.status(404).json({
     success: false,
-    message: err.message || "Something went wrong!",
+    message: `Can't find ${req.originalUrl} on this server!`,
   });
 });
+
+// Error handling middleware
+const { errorHandler } = require("./middleware/error");
+app.use(errorHandler);
 
 // Port
 const PORT = process.env.PORT || 5000;

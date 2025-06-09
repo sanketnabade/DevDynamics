@@ -5,9 +5,10 @@ const {
   calculateSettlements,
 } = require("../utils/helpers");
 const { validationResult } = require("express-validator");
+const { AppError } = require("../middleware/error");
 
 // Get all expenses
-exports.getAllExpenses = catchAsync(async (req, res) => {
+exports.getAllExpenses = catchAsync(async (req, res, next) => {
   const expenses = await Expense.find().sort("-createdAt");
   res.json({
     success: true,
@@ -17,14 +18,10 @@ exports.getAllExpenses = catchAsync(async (req, res) => {
 });
 
 // Create new expense
-exports.createExpense = catchAsync(async (req, res) => {
+exports.createExpense = catchAsync(async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(400).json({
-      success: false,
-      errors: errors.array(),
-      message: "Validation failed",
-    });
+    return next(new AppError("Validation failed", 400, errors.array()));
   }
 
   const expense = await Expense.create(req.body);
@@ -36,15 +33,10 @@ exports.createExpense = catchAsync(async (req, res) => {
 });
 
 // Update expense
-exports.updateExpense = catchAsync(async (req, res) => {
+exports.updateExpense = catchAsync(async (req, res, next) => {
   const errors = validationResult(req);
-  console.log("Id: ", req.params);
   if (!errors.isEmpty()) {
-    return res.status(400).json({
-      success: false,
-      errors: errors.array(),
-      message: "Validation failed",
-    });
+    return next(new AppError("Validation failed", 400, errors.array()));
   }
 
   const expense = await Expense.findByIdAndUpdate(req.params.id, req.body, {
@@ -53,10 +45,7 @@ exports.updateExpense = catchAsync(async (req, res) => {
   });
 
   if (!expense) {
-    return res.status(404).json({
-      success: false,
-      message: "Expense not found",
-    });
+    return next(new AppError("Expense not found", 404));
   }
 
   res.json({
@@ -67,14 +56,11 @@ exports.updateExpense = catchAsync(async (req, res) => {
 });
 
 // Delete expense
-exports.deleteExpense = catchAsync(async (req, res) => {
+exports.deleteExpense = catchAsync(async (req, res, next) => {
   const expense = await Expense.findByIdAndDelete(req.params.id);
 
   if (!expense) {
-    return res.status(404).json({
-      success: false,
-      message: "Expense not found",
-    });
+    return next(new AppError("Expense not found", 404));
   }
 
   res.json({
@@ -84,7 +70,7 @@ exports.deleteExpense = catchAsync(async (req, res) => {
 });
 
 // Get all people involved
-exports.getAllPeople = catchAsync(async (req, res) => {
+exports.getAllPeople = catchAsync(async (req, res, next) => {
   const expenses = await Expense.find();
   const peopleSet = new Set();
 
@@ -103,7 +89,7 @@ exports.getAllPeople = catchAsync(async (req, res) => {
 });
 
 // Get balances
-exports.getBalances = catchAsync(async (req, res) => {
+exports.getBalances = catchAsync(async (req, res, next) => {
   const expenses = await Expense.find();
   const balances = calculateBalances(expenses);
 
@@ -115,7 +101,7 @@ exports.getBalances = catchAsync(async (req, res) => {
 });
 
 // Get settlements
-exports.getSettlements = catchAsync(async (req, res) => {
+exports.getSettlements = catchAsync(async (req, res, next) => {
   const expenses = await Expense.find();
   const balances = calculateBalances(expenses);
   const settlements = calculateSettlements(balances);
