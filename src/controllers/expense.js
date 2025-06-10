@@ -19,9 +19,13 @@ exports.getAllExpenses = catchAsync(async (req, res, next) => {
 
 // Create new expense
 exports.createExpense = catchAsync(async (req, res, next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return next(new AppError("Validation failed", 400, errors.array()));
+  const result = validationResult(req);
+  if (!result.isEmpty()) {
+    const errors = result.array().map((err) => ({
+      field: err.path,
+      message: err.msg,
+    }));
+    return next(new AppError("Validation failed", 400, errors));
   }
 
   const expense = await Expense.create(req.body);
@@ -34,9 +38,13 @@ exports.createExpense = catchAsync(async (req, res, next) => {
 
 // Update expense
 exports.updateExpense = catchAsync(async (req, res, next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return next(new AppError("Validation failed", 400, errors.array()));
+  const result = validationResult(req);
+  if (!result.isEmpty()) {
+    const errors = result.array().map((err) => ({
+      field: err.path,
+      message: err.msg,
+    }));
+    return next(new AppError("Validation failed", 400, errors));
   }
 
   const expenseId = req.params.id || req.query.id;
