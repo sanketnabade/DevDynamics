@@ -226,7 +226,7 @@ The seed script includes test data with:
 
 ## Deployment
 
-Link:
+Link:- https://yelpcamp-izx5.onrender.com
 
 ## Contributing
 
