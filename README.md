@@ -228,7 +228,7 @@ The seed script includes test data with:
 
 Link:- https://yelpcamp-izx5.onrender.com
 
-Postman Collection link :- https://.postman.co/workspace/My-Workspace~67faf694-0fe6-4c22-857f-67f4ae830565/collection/35577019-8dcb8dc6-82c9-4c07-bf2e-6a04c914ac16?action=share&creator=35577019&active-environment=35577019-c33aa7f4-643e-4040-baea-1d644d4b279a
+Postman Collection link :- https://www.postman.com/aerospace-pilot-12275169/public/collection/ycol1oq/devdynamics?action=share&creator=35577019&active-environment=35577019-c33aa7f4-643e-4040-baea-1d644d4b279a
 
 ## Contributing
 
