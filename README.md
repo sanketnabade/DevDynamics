@@ -226,9 +226,10 @@ The seed script includes test data with:
 
 ## Deployment
 
-Link:- https://yelpcamp-izx5.onrender.com
+Link:- https://devdynamics-8y6p.onrender.com/
 
-Postman Collection link :- https://www.postman.com/aerospace-pilot-12275169/public/collection/ycol1oq/devdynamics?action=share&creator=35577019&active-environment=35577019-c33aa7f4-643e-4040-baea-1d644d4b279a
+Postman Collection link :- https://www.postman.com/aerospace-pilot-12275169/workspace/public/collection/35577019-8dcb8dc6-82c9-4c07-bf2e-6a04c914ac16?action=share&creator=35577019&active-environment=35577019-ed728547-da20-4e26-b3e3-8740cd7b9925
+
 
 ## Contributing
 
